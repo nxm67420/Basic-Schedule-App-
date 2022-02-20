@@ -1,0 +1,3 @@
+Start Application
+1.cd to actual project
+2. npm start || npx start
