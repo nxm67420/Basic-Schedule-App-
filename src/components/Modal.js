@@ -2,20 +2,22 @@ import React from 'react'
 import '../css/Modal.css'
 import ReactDOM from 'react-dom'
 
-export default function Modal(props) {
+export default function Modal({closeBox, changeColor, children}) {
   return ReactDOM.createPortal((
       <div className="modal-backdrop">
+
           <div className="modal" style={{
               border: "4px solid",
-              borderColor: props.changeColor ? "green" : "purple",
+              borderColor: changeColor ? "green" : "purple",
               textAlign: "center",
           }}>
-              {props.children}
-              <button onClick={props.closeBox}
-                     className={props.changeColor ? "sales-btn" : ""}>
-                  Close Modal
+              {children}
+              <button onClick={closeBox}
+                     className={changeColor ? "sales-btn" : ""}>
+                  Cancel
               </button>
           </div>
+          
       </div>
   ), document.body)
 }

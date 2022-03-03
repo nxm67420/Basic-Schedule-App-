@@ -2,6 +2,8 @@
 import logo from './logo.svg';
 //Import CSS File
 import './css/App.css';
+import './css/Modal.css'
+import styles from '../src/css/EventList.module.css'
 //Import React 
 import React, { useState } from 'react';
 //Import A Component
@@ -14,15 +16,12 @@ function App() {
   //States 
   const [name, setName] = useState('Original Text');
   const [showOptions, deleteOptions] = useState(true);
-  const [showModal, setModal] = useState(false)
-  const [showEvents, setEventsDisplay] = useState(!true)
+
+  const [showModal, setModal] = useState(false) /*Close Modal Box*/
+  const [showEvents, setEventsDisplay] = useState(false)//Show Event List Modal
 
   //Object Containing States
-  const [events, newEvent] = useState([
-    { title: "Batman", id: 1 },
-    { title: "Ironman", id: 2 },
-    { title: "Joker", id: 3 }
-  ]);
+  const [events, newEvent] = useState([' ']);
 
   const [currentJob, newJob] = useState([
     { position: "Team Lead", num: 0 },
@@ -44,6 +43,14 @@ function App() {
       console.log(id + ". " + event.title);
       return id !== event.id;
     }))
+  }
+
+  //Add Event To Array of Events
+  const addEvent = (event, index) => { 
+    newEvent((prevEvents) => { 
+      return [...prevEvents, event];
+    }) 
+    setModal(false)
   }
 
   //Delete events
@@ -89,6 +96,10 @@ function App() {
     console.log(showModal);
   }
 
+  const closeOut = () => { 
+    setModal(true);
+  }
+
   //Application 
   return (
     //Parent Element 
@@ -103,44 +114,70 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
 
+        {/* NOT IN USE */}
         {/*EventList Component*/ }
-        {showEvents && <EventList closeOut={() => setEventsDisplay(false)}>
+        {/* {showEvents && <EventList closeOut={() => setEventsDisplay(true)}>
           {events.map((event) => ( 
-            <div key={event.id}>
+            <div className={styles.card} key={event.id}>
               <h2>{event.title}
                 <button onClick={() => deleteEvent(event.id)}>
-                  Delete
+                  Delete This
                 </button>
               </h2>
             </div>
           ))}
-        </EventList>}
+        </EventList>} */}
         
-        
-        <p>How To Create A City</p>
         <div>
+          <p><span>List of Events</span></p>
           <button style={{ float: "right" }} onClick={() => deleteOptions(true)}>Show</button>
-            &nbsp;
-          <button style={{float: "left"}} onClick={() => deleteOptions(false)}>Hide</button>
+          &nbsp;
+          <button style={{ float: "left" }} onClick={() => deleteOptions(false)}>Hide</button>
         </div>
 
-        {/* Map Through Business List */}
-        {showOptions && businesses.map((business) => (
+        {/* Display Events */}
+        {showOptions && <EventList
+                        events={events}
+                        closeOut={closeOut }
+                        deleteEvent={deleteEvent} />}
+        
+      {/* <Modal>
+        <h1>Congratulations</h1>
+        <p>Youre a WINNER!!!</p>
+      </Modal> */}
+
+      {/* Modal Component */}
+      {/*Hide Modal*/}
+        {showModal &&
+                      <Modal
+                        closeBox={hideModal}
+                        changeColor={false}>
+                          <NewEventForm
+                            addEvent={addEvent} />
+                      </Modal>
+        }
+
+      {/*Show Modal*/}
+      <button onClick={() => setModal(true)}>Add New Event</button>
+
+        {/* Map Through Business List  */}
+        {/* {showOptions && businesses.map((business) => (
           <div key={business.value}>
             <h1>{business.title}
               <button onClick={() => deleteMe(business.value)}>Delete Business</button>
             </h1> 
           </div>
-        ))}
+        ))} */}
+        
         
         {/* Map Through Job List */}
-        {currentJob.map((job, index) => (
+        {/* {currentJob.map((job, index) => (
           <React.Fragment key={job.num}>
             <h2>{index + 1}. {job.position}
               <button onClick={() => deleteJob(job.num)}>Delete Job</button>
             </h2> 
           </React.Fragment>
-        ))}
+        ))} */}
     
         <a
           className="App-link"
@@ -151,21 +188,6 @@ function App() {
           Learn React
         </a>
       </header>
-
-      {/* <Modal>
-        <h1>Congratulations</h1>
-        <p>Youre a WINNER!!!</p>
-      </Modal> */}
-
-      {/* Modal Component */}
-      {/*Hide Modal*/}
-      {showModal && <Modal closeBox={hideModal} changeColor={ false}>
-        <NewEventForm/>
-      </Modal>}
-
-      {/*Show Modal*/}
-      <button onClick={() => setModal(true)}>Add New Event</button>
-      
     </div>
   );//End of Application 
 }

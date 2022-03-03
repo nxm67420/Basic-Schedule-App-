@@ -1,8 +1,11 @@
 .card{
-    border: 1px solid black;
+    border: 1px solid #eee;
     box-shadow: 4px 4px 5px black;
     padding: 10px;
     max-width: 400px;
     margin: 20px auto;
     border-radius: 4px;
+}
+.card h2 {
+    color: lawngreen;
 }
