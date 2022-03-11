@@ -46,7 +46,7 @@ function App() {
   }
 
   //Add Event To Array of Events
-  const addEvent = (event, index) => { 
+  const addEvent = (event) => { 
     newEvent((prevEvents) => { 
       return [...prevEvents, event];
     }) 
@@ -112,7 +112,6 @@ function App() {
 
       {/* Heading */}
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
 
         {/* NOT IN USE */}
         {/*EventList Component*/ }
@@ -129,7 +128,6 @@ function App() {
         </EventList>} */}
         
         <div>
-          <p><span>List of Events</span></p>
           <button style={{ float: "right" }} onClick={() => deleteOptions(true)}>Show</button>
           &nbsp;
           <button style={{ float: "left" }} onClick={() => deleteOptions(false)}>Hide</button>
